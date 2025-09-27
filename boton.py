@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
-LED_PIN = 4 
-BTN_PIN = 14
+LED_PIN = 17 
+BTN_PIN = 24
 
 def setup():
     GPIO.setmode(GPIO.BCM)

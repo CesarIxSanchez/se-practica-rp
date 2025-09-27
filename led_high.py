@@ -4,12 +4,12 @@ import time
 def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
-    GPIO.setup(4, GPIO.OUT)
+    GPIO.setup(17, GPIO.OUT)
 
 def loop():
-    GPIO.output(4, GPIO.HIGH)
+    GPIO.output(17, GPIO.HIGH)
     time.sleep(0.5)  
-    GPIO.output(4, GPIO.LOW)
+    GPIO.output(17, GPIO.LOW)
     time.sleep(0.5)
 
 if __name__ == "__main__":
