@@ -12,7 +12,7 @@ def read_potentiometer():
     # Descargar capacitor
     GPIO.setup(POT_PIN, GPIO.OUT)
     GPIO.output(POT_PIN, False)
-    time.sleep(0.10)  # Reducido para potenciómetro de 10K
+    time.sleep(0.05)  # Reducido para potenciómetro de 10K
     
     # Cambiar a entrada y medir tiempo hasta que se cargue
     GPIO.setup(POT_PIN, GPIO.IN)
@@ -20,7 +20,7 @@ def read_potentiometer():
     # Contar hasta que el pin sea HIGH
     while GPIO.input(POT_PIN) == GPIO.LOW:
         count += 1
-        if count > 100000:  # Timeout reducido para 10K
+        if count > 1000000:  # Timeout reducido para 10K
             break
     
     return count

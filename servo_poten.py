@@ -19,13 +19,13 @@ def read_potentiometer():
     count = 0
     GPIO.setup(POT_PIN, GPIO.OUT)
     GPIO.output(POT_PIN, False)
-    time.sleep(0.05)
+    time.sleep(0.10)
     
     GPIO.setup(POT_PIN, GPIO.IN)
     
     while GPIO.input(POT_PIN) == GPIO.LOW:
         count += 1
-        if count > 50000:
+        if count > 100000:
             break
     return count
 
