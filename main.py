@@ -5,6 +5,26 @@ import json
 import time
 from datetime import datetime
 
+def read_potentiometer():
+    # Medir tiempo de carga del capacitor
+    count = 0
+    
+    # Descargar capacitor
+    GPIO.setup(POT_PIN, GPIO.OUT)
+    GPIO.output(POT_PIN, False)
+    time.sleep(0.1)  # Reducido para potenciómetro de 10K
+    
+    # Cambiar a entrada y medir tiempo hasta que se cargue
+    GPIO.setup(POT_PIN, GPIO.IN)
+    
+    # Contar hasta que el pin sea HIGH
+    while GPIO.input(POT_PIN) == GPIO.LOW:
+        count += 1
+        if count > 100000:  # Timeout reducido para 10K
+            break
+    
+    return count
+
 # Calibrar para potenciómetro de 5K
 def calibrate():
     print("Calibrando para potenciómetro 10K...")
@@ -31,7 +51,7 @@ def setup():
 
 def loop():
     global min_value, max_value
-    
+
     value = read_potentiometer()
         
     # Normalizar el valor para potenciómetro de 10K
@@ -57,28 +77,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Detenido por el usuario")
 
-
-
-
-def read_potentiometer():
-    # Medir tiempo de carga del capacitor
-    count = 0
-    
-    # Descargar capacitor
-    GPIO.setup(POT_PIN, GPIO.OUT)
-    GPIO.output(POT_PIN, False)
-    time.sleep(0.1)  # Reducido para potenciómetro de 10K
-    
-    # Cambiar a entrada y medir tiempo hasta que se cargue
-    GPIO.setup(POT_PIN, GPIO.IN)
-    
-    # Contar hasta que el pin sea HIGH
-    while GPIO.input(POT_PIN) == GPIO.LOW:
-        count += 1
-        if count > 100000:  # Timeout reducido para 10K
-            break
-    
-    return count
 
 # Api
 app = Flask(__name__)
