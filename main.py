@@ -5,22 +5,33 @@ import json
 import time
 from datetime import datetime
 
+# Calibrar para potenciómetro de 5K
+def calibrate():
+    print("Calibrando para potenciómetro 10K...")
+    print("Gira completamente a la izquierda (mínimo)")
+    time.sleep(3)
+    min_val = read_potentiometer()
+    
+    print("Gira completamente a la derecha (máximo)")
+    time.sleep(3)
+    max_val = read_potentiometer()
+    
+    print(f"Calibración: Mínimo={min_val}, Máximo={max_val}")
+    return min_val, max_val
+
 # Configuración
 POT_PIN = 4
 GPIO.setmode(GPIO.BCM)
-min_value = None
-max_value = None
+min_value, max_value = calibrate()
 
 def setup():
-    global min_value, max_value
-    min_value, max_value = calibrate()
-    
     GPIO.setup(POT_PIN, GPIO.OUT)
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 def loop():
     global min_value, max_value
+    
     value = read_potentiometer()
         
     # Normalizar el valor para potenciómetro de 10K
@@ -46,19 +57,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Detenido por el usuario")
 
-# Calibrar para potenciómetro de 5K
-def calibrate():
-    print("Calibrando para potenciómetro 10K...")
-    print("Gira completamente a la izquierda (mínimo)")
-    time.sleep(3)
-    min_val = read_potentiometer()
-    
-    print("Gira completamente a la derecha (máximo)")
-    time.sleep(3)
-    max_val = read_potentiometer()
-    
-    print(f"Calibración: Mínimo={min_val}, Máximo={max_val}")
-    return min_val, max_val
+
 
 
 def read_potentiometer():
