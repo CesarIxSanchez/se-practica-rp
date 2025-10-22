@@ -5,17 +5,22 @@ import json
 import time
 from datetime import datetime
 
+
+
 # Configuración
 POT_PIN = 4
 GPIO.setmode(GPIO.BCM)
-min_value, max_value = calibrate()
+min_value, max_value = None
 
 def setup():
+    global min_value, max_value
     GPIO.setup(POT_PIN, GPIO.OUT)
+    min_value, max_value = calibrate()
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 def loop():
+    global min_value, max_value
     value = read_potentiometer()
         
     # Normalizar el valor para potenciómetro de 10K
