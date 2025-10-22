@@ -41,6 +41,20 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Detenido por el usuario")
 
+# Calibrar para potenciómetro de 5K
+def calibrate():
+    print("Calibrando para potenciómetro 10K...")
+    print("Gira completamente a la izquierda (mínimo)")
+    time.sleep(3)
+    min_val = read_potentiometer()
+    
+    print("Gira completamente a la derecha (máximo)")
+    time.sleep(3)
+    max_val = read_potentiometer()
+    
+    print(f"Calibración: Mínimo={min_val}, Máximo={max_val}")
+    return min_val, max_val
+
 
 def read_potentiometer():
     # Medir tiempo de carga del capacitor
