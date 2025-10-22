@@ -5,6 +5,30 @@ import json
 import time
 from datetime import datetime
 
+# Api
+app = Flask(__name__)
+# Datos de ejemplo (pueden venir de tu sensor)
+datos_sensor = {
+    "Valor crudo": 1000,
+    "porcentaje": '20%',
+    "resistencia aproximada": "10kO",
+    "ultima_actualizacion": datetime.now().isoformat()
+}
+
+@app.route('/')
+def home():
+    return jsonify({"mensaje": "API del Sensor", "endpoints": ["/api/sensor", "/api/estado"]})
+
+@app.route('/api/sensor')
+def get_sensor_data():
+    # Actualizar timestamp
+    datos_sensor["ultima_actualizacion"] = datetime.now().isoformat()
+    return jsonify(datos_sensor)
+
+@app.route('/api/estado')
+def get_status():
+    return jsonify({"estado": "sistema funcionando", "timestamp": datetime.now().isoformat()})
+
 def read_potentiometer():
     # Medir tiempo de carga del capacitor
     count = 0
@@ -77,27 +101,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Detenido por el usuario")
 
-
-# Api
-app = Flask(__name__)
-# Datos de ejemplo (pueden venir de tu sensor)
-datos_sensor = {
-    "Valor crudo": 1000,
-    "porcentaje": '20%',
-    "resistencia aproximada": "10kO",
-    "ultima_actualizacion": datetime.now().isoformat()
-}
-
-@app.route('/')
-def home():
-    return jsonify({"mensaje": "API del Sensor", "endpoints": ["/api/sensor", "/api/estado"]})
-
-@app.route('/api/sensor')
-def get_sensor_data():
-    # Actualizar timestamp
-    datos_sensor["ultima_actualizacion"] = datetime.now().isoformat()
-    return jsonify(datos_sensor)
-
-@app.route('/api/estado')
-def get_status():
-    return jsonify({"estado": "sistema funcionando", "timestamp": datetime.now().isoformat()})
