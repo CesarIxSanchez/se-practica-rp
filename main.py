@@ -18,7 +18,7 @@ def setup():
 def loop():
     value = read_potentiometer()
         
-    # Normalizar el valor para potenciómetro de 5K
+    # Normalizar el valor para potenciómetro de 10K
     if max_value - min_value > 0:
         normalized = (value - min_value) / (max_value - min_value) * 100.0
         normalized = max(0, min(100, normalized))  # Limitar entre 0-100%
@@ -26,7 +26,7 @@ def loop():
         normalized = 50  # Valor por defecto
         
     # También calcular resistencia aproximada
-    resistance_approx = (value / max_value) * 10000  # Aproximación para 5K
+    resistance_approx = (value / max_value) * 10000  # Aproximación para 10K
     
     print(f"Valor crudo: {value:4d} -> {normalized:5.1f}% -> ~{resistance_approx:4.0f}Ω")
     time.sleep(0.3)
@@ -49,7 +49,7 @@ def read_potentiometer():
     # Descargar capacitor
     GPIO.setup(POT_PIN, GPIO.OUT)
     GPIO.output(POT_PIN, False)
-    time.sleep(0.1)  # Reducido para potenciómetro de 5K
+    time.sleep(0.1)  # Reducido para potenciómetro de 10K
     
     # Cambiar a entrada y medir tiempo hasta que se cargue
     GPIO.setup(POT_PIN, GPIO.IN)
@@ -57,7 +57,7 @@ def read_potentiometer():
     # Contar hasta que el pin sea HIGH
     while GPIO.input(POT_PIN) == GPIO.LOW:
         count += 1
-        if count > 100000:  # Timeout reducido para 5K
+        if count > 100000:  # Timeout reducido para 10K
             break
     
     return count
